@@ -35,7 +35,7 @@ public List<Prestito> read(){
             Connection c = DbConnection.openConnection();
             //System.out.println("Connessione riuscita!");
             Statement stmt = c.createStatement();
-            stmt.execute("DELETE FROM lendings WHERE id= "+ oPrestito.getId() );
+            stmt.execute("DELETE FROM lendings WHERE idl= "+ oPrestito.getId() );
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getMessage());
             System.exit(0);

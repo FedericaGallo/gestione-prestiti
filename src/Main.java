@@ -285,7 +285,7 @@ public class Main {
         List<Prestito> listaPrestito= oPrestitoService.readPrestito();
         int i = 0;
         while(i<listaPrestito.size()){
-            System.out.println(listaPrestito.get(i).getId()+". " + listaPrestito.get(i).getLibro()+"dal "+ listaPrestito.get(i).getUtente()+" "+listaPrestito.get(i).getInizioPrestito()+" al "+listaPrestito.get(i).getFinePrestito());
+            System.out.println(listaPrestito.get(i).getId()+". " + listaPrestito.get(i).getLibro()+" "+ listaPrestito.get(i).getUtente()+" dal "+listaPrestito.get(i).getInizioPrestito()+" al "+listaPrestito.get(i).getFinePrestito());
             i++;}
 
     }

@@ -17,7 +17,7 @@ public class PrestitoService {
         oPrestito.setFinePrestito(dataFinePrestito);
         oPrestito.setInizioPrestito(dataInizioPrestito);
         Libro oLibro = new Libro();
-        Utente oUtente =new Utente();
+        Utente oUtente = new Utente();
         oLibro.setId(idLibro);
         oUtente.setId(idUtente);
         oPrestito.setLibro(oLibro);
