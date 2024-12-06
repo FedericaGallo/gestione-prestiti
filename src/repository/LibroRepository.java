@@ -85,7 +85,7 @@ public class LibroRepository {
             Connection c = DbConnection.openConnection();
             //System.out.println("Connessione riuscita!");
             Statement stmt = c.createStatement();
-            stmt.execute("UPDATE books SET title='"+oLibro.getTitolo()+"', author='"+oLibro.getAutore()+"' WHERE idb ="  + oLibro.getId());
+            stmt.execute("UPDATE books SET title='"+oLibro.getTitolo()+"', author='"+oLibro.getAutore()+"' WHERE idb ='"  + oLibro.getId() +"'");
             System.out.println("model.dao.Libro aggiornato");
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getMessage());
