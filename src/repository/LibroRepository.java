@@ -16,7 +16,7 @@ public class LibroRepository {
             Connection c = DbConnection.openConnection();
             //System.out.println("Connessione riuscita!");
             Statement stmt = c.createStatement();
-            stmt.execute("INSERT INTO books VALUES('" + oLibro.getId() + "','" + oLibro.getTitolo() + "', '"+ oLibro.getAutore() +"')");
+            stmt.execute("INSERT INTO books VALUES('" + oLibro.getId() + "', '" + oLibro.getTitolo() + "', '"+ oLibro.getAutore() +"')");
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getMessage());
             System.exit(0);
