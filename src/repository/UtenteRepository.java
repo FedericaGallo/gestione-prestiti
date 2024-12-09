@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import Config.DbConnection;
-import entity.Utente;
+import entity.*;
 
 public class UtenteRepository {
 
@@ -44,6 +44,7 @@ public class UtenteRepository {
         }
         return oUtente;
     }
+
 
     public ArrayList<Utente> readUtente () {
         ArrayList<Utente> listaUtente = new ArrayList<>();

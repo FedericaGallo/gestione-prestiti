@@ -36,6 +36,12 @@ public class PrestitoService {
     public List<Prestito> readPrestito(){
        return prestitoRepository.readPrestito();
     }
+    public List<Prestito> readPrestitoByUtente(int id){
+        return prestitoRepository.readPrestitoByUtente(id);
+    }
+    public List<Prestito> readPrestitoByLibro(String id){
+        return prestitoRepository.readPrestitoByLibro(id);
+    }
     public void update(){}
 
 }

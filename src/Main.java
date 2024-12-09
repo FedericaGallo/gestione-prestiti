@@ -15,6 +15,7 @@ public class Main {
         System.out.println("1. Per gestire i libri");
         System.out.println("2. Per gestire gli utenti");
         System.out.println("3. Per gestire prestiti");
+        System.out.println("4. query");
         choiceEntity = scanner.nextInt();
 
         switch (choiceEntity){
@@ -26,6 +27,9 @@ public class Main {
                 break;
             case 3:
                 gestisciPrestito();
+                break;
+            case 4:
+                altreQuery();
                 break;
 
             default:
@@ -130,6 +134,7 @@ public class Main {
             System.out.println("2. Aggiorna un prestito");
             System.out.println("3. Visualizza la lista dei prestiti");
             System.out.println("4. Elimina un prestito");
+            System.out.println("5. Visualizza la lista dei prestiti per utente");
             System.out.println("9. Exit");
             System.out.print("inserisci la tua scelta: ");
 
@@ -148,6 +153,51 @@ public class Main {
                     break;
                 case 4:
                     deletePrestito();
+                    break;
+                case 5:
+                    readPrestitoByUtente();
+                    break;
+                case 9:
+                    System.out.println("exiting");
+                    break;
+                default:
+                    System.out.println("scelta errata. scegliere un numero da 1 a 8");
+            }
+
+        } while (choice != 9);
+        scanner.close();
+
+    }
+    private static void altreQuery(){
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+
+            System.out.println("Query");
+
+            System.out.println("***Menu***");
+            System.out.println("1. Visualizza tutte le persone che hanno preso in prestito un libro");
+            System.out.println("2. Il numero di prestiti per ogni utente");
+            System.out.println("3. Il numero di prestito per ogni libro");
+            System.out.println("4. Visualizza libri mai prestati");
+            System.out.println("9. Exit");
+            System.out.print("inserisci la tua scelta: ");
+
+            // Read user input
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    readPrestitoByLibro();
+                    break;
+                case 2:
+                    readCountPrestitiByUtente();
+                    break;
+                case 3:
+                    readCountPrestitiByLibro();
+                    break;
+                case 4:
+                    readLibriMaiPrestati();
                     break;
                 case 9:
                     System.out.println("exiting");
@@ -279,6 +329,18 @@ public class Main {
         PrestitoService oPrestitoService = new PrestitoService();
         oPrestitoService.delete(idPrestito);
     }
+    private static void readPrestitoByUtente(){
+        readUtente();
+        System.out.println("inserisci l'id dell'utente del quale vuoi visualizzare i prestiti: ");
+        Scanner scanner = new Scanner(System.in);
+        int idUtente = scanner.nextInt();
+        PrestitoService oPrestitoService = new PrestitoService();
+        List<Prestito> listaPrestito = oPrestitoService.readPrestitoByUtente(idUtente);
+        int i = 0;
+        while(i<listaPrestito.size()){
+            System.out.println(listaPrestito.get(i).getId()+". " + listaPrestito.get(i).getLibro()+"  dal "+listaPrestito.get(i).getInizioPrestito()+" al "+listaPrestito.get(i).getFinePrestito());
+            i++;}
+    }
     private static void readPrestito() {
         System.out.println("ecco la lista dei prestiti: ");
         PrestitoService oPrestitoService = new PrestitoService();
@@ -310,5 +372,41 @@ public class Main {
         PrestitoService oPrestitoService = new PrestitoService();
         //oPrestitoService.update(id, idStudente, idLibro, dataInizioPrestitoFormatted, dataFinePrestitoFormatted);
     }
-
+  //QUERY
+    public static void readPrestitoByLibro(){
+        readLibro();
+        System.out.println("Seleziona l'id del libro: ");
+        Scanner scanner = new Scanner(System.in);
+        String id = scanner.nextLine();
+        PrestitoService oPrestitoService= new PrestitoService();
+       List<Prestito> listaPrestito = oPrestitoService.readPrestitoByLibro(id);
+        int i = 0;
+        while(i<listaPrestito.size()){
+            System.out.println(listaPrestito.get(i).getId()+". "+ listaPrestito.get(i).getUtente()+" dal "+listaPrestito.get(i).getInizioPrestito()+" al "+listaPrestito.get(i).getFinePrestito());
+            i++;}
+    }
+    public static void readCountPrestitiByLibro(){
+        PrestitoRepository prestitoRepository = new PrestitoRepository();
+        HashMap<Libro, Integer> libroCountPrestito = prestitoRepository.readCountPrestitoByLibro();
+        for (Libro i : libroCountPrestito.keySet()) {
+            System.out.println("libro: " + i.getAutore() +" "+ i.getTitolo()+ " prestato n: " + libroCountPrestito.get(i)+ " volte");
+        }
+    }
+    public static void readCountPrestitiByUtente(){
+        PrestitoRepository prestitoRepository = new PrestitoRepository();
+        HashMap<Utente, Integer> utenteCountPrestito = prestitoRepository.readCountPrestitoByUtente();
+        for (Utente i : utenteCountPrestito.keySet()) {
+            System.out.println("utente: " + i.getNome() +" "+ i.getCognome()+ " ha preso in prestito n: " + utenteCountPrestito.get(i)+ " libri");
+        }
+    }
+    public static void readLibriMaiPrestati(){
+        System.out.println("ecco la lista dei libri mai prestati: ");
+        LibroRepository oLibroRepository = new LibroRepository();
+        List<Libro> listaLibro= oLibroRepository.readLibroMaiPrestati();
+        System.out.println("ciaoo");
+        int i = 0;
+        while(i<listaLibro.size()){
+            System.out.println(listaLibro.get(i).getId()+" "+listaLibro.get(i).getTitolo()+" "+listaLibro.get(i).getAutore());
+            i++;}
+    }
 }

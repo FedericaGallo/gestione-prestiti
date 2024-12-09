@@ -92,4 +92,30 @@ public class LibroRepository {
             System.exit(0);
         }
     }
+
+    public ArrayList<Libro> readLibroMaiPrestati(){
+         ArrayList<Libro> libriMaiPrestati= new ArrayList<>();
+        try {
+            Connection c = DbConnection.openConnection();
+            //System.out.println("Connessione riuscita!");
+            Statement stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * " +
+                    "FROM books " +
+                    "WHERE idb NOT IN (SELECT b.idb " +
+                    "FROM books b " +
+                    "JOIN lendings l ON b.idb = l.idb);");
+            //System.out.println("model.dao.Libro aggiornato");
+            while (rs.next()) {
+                Libro oLibro = new Libro();
+                oLibro.setTitolo(rs.getString("title"));
+                oLibro.setAutore(rs.getString("author"));
+                oLibro.setId(rs.getString("idb"));
+                libriMaiPrestati.add(oLibro);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        return libriMaiPrestati;
+    }
 }
